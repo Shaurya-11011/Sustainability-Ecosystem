@@ -27,5 +27,4 @@ An interactive network visualization that maps out the collaborative relationshi
 ## 🗂️ Folder Structure
 sustainability-ecosystem/
 ├── index.html
-├── screenshot.png
 ├── README.md
