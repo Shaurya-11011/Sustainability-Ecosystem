@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sustainable Business Ecosystem</title>
+  <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@500&display=swap');
+
+    body {
+      background-color: #0d1117;
+      color: #c9d1d9;
+      font-family: 'Segoe UI', sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+    h1 {
+      color: #e63946;
+      margin: 20px 0 10px 0;
+      font-family: 'Rubik', sans-serif;
+      font-size: 2.2rem;
+    }
+    #network {
+      width: 90vw;
+      height: 70vh;
+      margin: auto;
+      border: 2px solid #30363d;
+      border-radius: 10px;
+      background-color: #161b22;
+    }
+    .caption {
+      font-size: 0.9rem;
+      color: #8b949e;
+      margin-top: 10px;
+    }
+    #info-box {
+      width: 90vw;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: #1c2128;
+      border: 1px solid #30363d;
+      border-radius: 8px;
+      font-size: 1rem;
+      color: #c9d1d9;
+      text-align: left;
+      line-height: 1.6;
+    }
+    #info-box h2 {
+      color: #58a6ff;
+      margin-bottom: 10px;
+    }
+    #info-box ul {
+      padding-left: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1> Sustainable Business Ecosystem</h1>
+  <div id="network"></div>
+  <div class="caption">Click nodes or relationship labels to explore impact-driven collaborations.</div>
+  <div id="info-box">Click on a node or edge label to view more information about its role in the ecosystem.</div>
+
+  <script>
+    const nodeInfo = {
+      1: `<h2>Clean Energy Startup</h2><ul><li>Focuses on solar, wind, and hybrid renewable solutions.</li><li>Collaborates with local government for smart grid integration.</li><li>Partners with waste firms to convert bio-waste into clean energy.</li><li>Contributes to lowering CO₂ emissions in urban environments.</li></ul>`,
+      2: `<h2>Waste Management Firm</h2><ul><li>Specializes in circular economy waste strategies.</li><li>Supplies organic fertilizer to farming cooperatives.</li><li>Supports clean energy startups via bio-conversion.</li><li>Uses AI to optimize waste routing and segregation.</li></ul>`,
+      3: `<h2>Local Government</h2><ul><li>Provides regulatory incentives for sustainable practices.</li><li>Enables public-private collaboration platforms.</li><li>Backs awareness campaigns and infrastructure support.</li><li>Facilitates policy for clean energy grid integration.</li></ul>`,
+      4: `<h2>NGO (Green Earth)</h2><ul><li>Educates communities on sustainability goals.</li><li>Drives behavior change through on-ground awareness.</li><li>Supports training and upskilling of rural farmers.</li><li>Partners with governments and co-ops for impact projects.</li></ul>`,
+      5: `<h2>Agriculture Co-op</h2><ul><li>Empowers local farmers with sustainable practices.</li><li>Utilizes organic fertilizers from waste firms.</li><li>Collaborates with NGOs for education initiatives.</li><li>Feeds back produce data to analytics platforms.</li></ul>`,
+      6: `<h2>AI Analytics Partner</h2><ul><li>Develops predictive tools for sustainability impact.</li><li>Forecasts energy demand and supply bottlenecks.</li><li>Improves routing for waste collection and recycling.</li><li>Enables data-driven decisions across the ecosystem.</li></ul>`
+    };
+
+    const edgeInfo = {
+      '1-3': `<h2>Grid Integration Policy</h2><p>Enables clean energy startups to inject renewable energy into public infrastructure, supported by favorable government regulations.</p>`,
+      '1-2': `<h2>Bio-waste to Energy</h2><p>Waste from management firms is processed into clean energy, promoting circular economy collaboration.</p>`,
+      '2-5': `<h2>Organic Fertilizer Supply</h2><p>Processed organic waste is converted into fertilizers for use in sustainable agriculture by co-ops.</p>`,
+      '4-5': `<h2>Farmer Education</h2><p>NGOs train farmers on sustainable practices, crop rotation, and organic inputs through on-ground campaigns.</p>`,
+      '3-4': `<h2>Awareness Campaigns</h2><p>Governments and NGOs conduct collaborative campaigns to raise public and farmer awareness on green practices.</p>`,
+      '6-1': `<h2>Demand Forecasting AI</h2><p>AI tools predict energy needs, helping clean tech startups scale efficiently and avoid energy waste.</p>`,
+      '6-2': `<h2>Waste Flow Optimization</h2><p>Analytics optimize the route, timing, and collection of recyclable and organic waste in urban areas.</p>`
+    };
+
+    const nodes = new vis.DataSet([
+      { id: 1, label: "Clean Energy Startup", color: '#58a6ff' },
+      { id: 2, label: "Waste Management Firm", color: '#3fb950' },
+      { id: 3, label: "Local Government", color: '#f85149' },
+      { id: 4, label: "NGO (Green Earth)", color: '#d29922' },
+      { id: 5, label: "Agriculture Co-op", color: '#8e44ad' },
+      { id: 6, label: "AI Analytics Partner", color: '#ffa657' }
+    ]);
+
+    const edges = new vis.DataSet([
+      { id: '1-3', from: 1, to: 3, label: "Grid Integration Policy", arrows: 'to', font: { color: '#c9d1d9', background: '#0d1117' } },
+      { id: '1-2', from: 1, to: 2, label: "Bio-waste to Energy", font: { color: '#c9d1d9', background: '#0d1117' } },
+      { id: '2-5', from: 2, to: 5, label: "Organic Fertilizer Supply", font: { color: '#c9d1d9', background: '#0d1117' } },
+      { id: '4-5', from: 4, to: 5, label: "Farmer Education", font: { color: '#c9d1d9', background: '#0d1117' } },
+      { id: '3-4', from: 3, to: 4, label: "Awareness Campaigns", font: { color: '#c9d1d9', background: '#0d1117' } },
+      { id: '6-1', from: 6, to: 1, label: "Demand Forecasting AI", font: { color: '#c9d1d9', background: '#0d1117' } },
+      { id: '6-2', from: 6, to: 2, label: "Waste Flow Optimization", font: { color: '#c9d1d9', background: '#0d1117' } }
+    ]);
+
+    const container = document.getElementById("network");
+    const data = { nodes: nodes, edges: edges };
+    const options = {
+      nodes: {
+        shape: "dot",
+        size: 24,
+        font: { color: '#c9d1d9', face: 'Segoe UI', size: 18 },
+        borderWidth: 2
+      },
+      edges: {
+        font: { align: 'middle', strokeWidth: 0, size: 14 },
+        color: { color: '#58a6ff', highlight: '#f0f6fc', opacity: 0.8 },
+        arrows: { to: { enabled: true, scaleFactor: 0.8 } },
+        smooth: { type: "dynamic" }
+      },
+      layout: { improvedLayout: true },
+      physics: {
+        stabilization: true,
+        barnesHut: {
+          gravitationalConstant: -12000,
+          centralGravity: 0.2,
+          springLength: 180,
+          springConstant: 0.03
+        }
+      },
+      interaction: { hover: true, tooltipDelay: 200 }
+    };
+
+    const network = new vis.Network(container, data, options);
+
+    network.on("click", function (params) {
+      const nodeId = params.nodes[0];
+      const edgeId = params.edges[0];
+
+      if (nodeId) {
+        document.getElementById("info-box").innerHTML = nodeInfo[nodeId] || "<p>Information not available.</p>";
+      } else if (edgeId) {
+        document.getElementById("info-box").innerHTML = edgeInfo[edgeId] || "<p>Information not available.</p>";
+      }
+    });
+  </script>
+</body>
+</html>
