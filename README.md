@@ -4,7 +4,6 @@ An interactive network visualization that maps out the collaborative relationshi
 
 ## 🔗 Live Demo
 [👉 View the Website]([https://shaurya-11011.github.io/Sustainability-Ecosystem/])  
-*(Replace with your actual GitHub Pages URL after deployment)*
 
 ---
 
